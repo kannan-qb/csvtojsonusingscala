@@ -14,13 +14,24 @@ object DataModel{
          |    "department": "${datamodel.department}",
          |    "age: ${datamodel.age},
          |    "bloodgroup": "${datamodel.bloodgroup}",""".stripMargin
-    val stringrep2 = if(datamodel.mobile.nonEmpty) {
+    val stringrep2 =
       s"""\n    "mobile": ${datamodel.mobile.get}
            |}""".stripMargin
-      }else {
-         ""
-    }
-    stringrep1+stringrep2
+
+
+    val stringrep3 = s"""{
+                        |    "id": ${datamodel.id},
+                        |    "name": "${datamodel.name}",
+                        |    "department": "${datamodel.department}",
+                        |    "age: ${datamodel.age},
+                        |    "bloodgroup": "${datamodel.bloodgroup}"
+                        |}""".stripMargin
+   if(datamodel.mobile.nonEmpty){
+     stringrep1+stringrep2
+   } else{
+     stringrep3
+   }
+
   }
   def jsonFormat(dataModels:util.List[DataModel]):String  = {
     dataModels.stream()

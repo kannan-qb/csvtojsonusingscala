@@ -5,20 +5,20 @@ import java.util
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
-object CsvReader extends  App {
+object CsvReader {
   def readFromCsv(filePath: String):Option[util.List[String]] = {
     val source = Source.fromFile(filePath)
-    Try {
-      val linesList: Iterator[String] = source.getLines()
-      val list: util.List[String] = new util.LinkedList[String]()
+    val linesList: Iterator[String] = source.getLines()
+    val list: util.List[String] = new util.LinkedList[String]()
       while (linesList.hasNext) {
         list.add(linesList.next())
       }
       source.close()
-      Some(list)
-    } match {
+      Try(Some(list))
+      match {
       case Success(value) => value
-      case Failure(exception) => errorLogs(ApplicationConfig.config.getString("errorpath"),exception.getMessage)
+      case Failure(exception) => errorLogs(ApplicationConfig.config
+                                 .getString("errorpath"),exception.getMessage)
                                   None
     }
     }
@@ -30,7 +30,6 @@ object CsvReader extends  App {
     }
   }
   def writeTojson(filePath: String,input: String): Unit = {
-
     Try(new PrintWriter(filePath)) match {
       case Success(value) => value.println(input)
                               value.close()
