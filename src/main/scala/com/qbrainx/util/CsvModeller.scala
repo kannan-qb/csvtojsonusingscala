@@ -1,5 +1,4 @@
 package com.qbrainx.util
-
 import com.qbrainx.config.ApplicationConfig
 import com.qbrainx.model.DataModel
 import com.qbrainx.util.CsvReader.errorLogs
@@ -19,8 +18,7 @@ object CsvModeller {
           (d(0), d(1), d(2), d(3), d(4), d(5))
         } match {
           case Success(value) => value
-          case Failure(exception) => CsvReader
-            .errorLogs(ApplicationConfig.config.getString("errorpath"),exception.getMessage)
+          case Failure(exception) => errorLogs(ApplicationConfig.config.getString("errorpath"),exception.getMessage)
             ("", "", "", "", "", "")
         })
       .collect(Collectors.toList[(String, String, String, String, String, String)])

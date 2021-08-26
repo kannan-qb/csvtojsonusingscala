@@ -2,7 +2,6 @@ package com.qbrainx.model
 import java.util
 import java.util.stream.Collectors
 
-
 case class DataModel (id:Int,name:String,department:String,age:Int,
                       bloodgroup:String,mobile:Option[Long])
 
@@ -25,9 +24,7 @@ object DataModel{
   }
   def jsonFormat(dataModels:util.List[DataModel]):String  = {
     dataModels.stream()
-      .map(student => datatoJson(student))
+      .map(data => datatoJson(data))
       .collect(Collectors.joining(",",  "[", "]"))
   }
-
-
 }
