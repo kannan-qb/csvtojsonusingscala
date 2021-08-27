@@ -1,24 +1,28 @@
 package com.qbrainx.util
 import com.qbrainx.config.ApplicationConfig
+
 import java.io.PrintWriter
 import java.util
 import scala.io.Source
 import scala.util.{Failure, Success, Try}
+import scala.jdk.CollectionConverters._
 
-object CsvReader {
-  def readFromCsv(filePath: String):Option[util.List[String]] = {
+
+object CsvReader extends App{
+  def readFromCsv(filePath: String):Option[List[String]] = {
     val source = Source.fromFile(filePath)
     val linesList: Iterator[String] = source.getLines()
     val list: util.List[String] = new util.LinkedList[String]()
-      while (linesList.hasNext) {
-        list.add(linesList.next())
-      }
-      source.close()
-      Try(Some(list))
+    while (linesList.hasNext) {
+      list.add(linesList.next())
+    }
+    Try(Some(list.asScala.toList))
       match {
-      case Success(value) => value
+      case Success(value) => source.close()
+                              value
       case Failure(exception) => errorLogs(ApplicationConfig.config
                                  .getString("errorpath"),exception.getMessage)
+
                                   None
     }
     }

@@ -1,9 +1,11 @@
 package com.qbrainx.model
-import java.util
+
 import java.util.stream.Collectors
+import scala.jdk.CollectionConverters._
+
 
 case class DataModel (id:Int,name:String,department:String,age:Int,
-                      bloodgroup:String,mobile:Option[Long])
+                      bloodgroup:String,mobile:Option[String])
 
 object DataModel{
   def datatoJson(datamodel:DataModel):String = {
@@ -33,9 +35,13 @@ object DataModel{
    }
 
   }
-  def jsonFormat(dataModels:util.List[DataModel]):String  = {
-    dataModels.stream()
-      .map(data => datatoJson(data))
-      .collect(Collectors.joining(",",  "[", "]"))
+  def jsonFormat(dataModels:List[DataModel]):String  = {
+    val jsonform: String = dataModels.asJava.stream()
+                         .map(data => datatoJson(data))
+                          .collect(Collectors.joining(",", "[", "]"))
+    jsonform
+
+
+
   }
 }
